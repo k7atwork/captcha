@@ -1,3 +1,5 @@
+#captcha
+# HTML._CAPTCHA_IMG_WRAPPER = <img src="data:image/png;base64,%bind(:1)" alt="" style="float:left;"/>
 
 Function buildCaptcha() Returns string
    
@@ -16,9 +18,9 @@ Function buildCaptcha() Returns string
       &imgHTML = &imgHTML | GetHTMLText(HTML.TTLE_CAPTCHA_IMG_WRAPPER, &imgBase64);
    End-For;
    
-   G_FORM_TTLE_WRK.HTMLAREA1.Value = "<table border=0 bgcolor=#C0C0C0><tr><td>" | &imgHTML | "</td></tr></table>";
+   _WRK.HTMLAREA1.Value = "<table border=0 bgcolor=#C0C0C0><tr><td>" | &imgHTML | "</td></tr></table>";
    
-   G_FORM_TTLE_WRK.AUTH_KEYWORD.Visible = True;
+   _WRK.AUTH_KEYWORD.Visible = True;
    
    Return &genAuthCode;
    
