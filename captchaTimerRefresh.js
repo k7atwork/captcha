@@ -4,7 +4,7 @@
 
 function captchaRefresh()
 {
- submitAction_win0(document.win0,'G_FORM_TTLE_WRK_REFRESH_ICN');
+ submitAction_win0(document.win0,'_FORM_TTLE_WRK_REFRESH_ICN');
 }
 
 function captchaTimer()
