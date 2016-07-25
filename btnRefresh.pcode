@@ -1,0 +1,29 @@
+
+Function buildCaptcha() Returns string
+   
+   Local string &genAuthCode = String(Int(Rand() * 1000000));;
+   
+   While Len(&genAuthCode) < 6
+      &genAuthCode = String(Int(Rand() * 1000000));
+   End-While;
+   
+   Local number &i;
+   Local string &char, &imgBase64, &imgHTML;
+   
+   For &i = 1 To Len(&genAuthCode)
+      &char = Substring(&genAuthCode, &i, 1);
+      &imgBase64 = GetHTMLText(@("HTML.UA_CAPTCHA_BASE64_" | &char));
+      &imgHTML = &imgHTML | GetHTMLText(HTML.TTLE_CAPTCHA_IMG_WRAPPER, &imgBase64);
+   End-For;
+   
+   G_FORM_TTLE_WRK.HTMLAREA1.Value = "<table border=0 bgcolor=#C0C0C0><tr><td>" | &imgHTML | "</td></tr></table>";
+   
+   G_FORM_TTLE_WRK.AUTH_KEYWORD.Visible = True;
+   
+   Return &genAuthCode;
+   
+End-Function;
+
+Component string &captchaCode;
+
+&captchaCode = buildCaptcha();
