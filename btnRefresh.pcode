@@ -31,8 +31,10 @@ Function buildCaptcha() Returns string
    
    &captchaRec.AUTH_KEYWORD.Visible = True;
    
-   &captchaRec.REFRESH_ICN.LabelImage = Image.UA_CAPTCHA_REFRESH_D;
+   &captchaRec.AUTH_KEYWORD.Value = "";
    &captchaRec.AUTH_KEYWORD.SetCursorPos(%Page);
+   
+   &captchaRec.REFRESH_ICN.LabelImage = Image.UA_CAPTCHA_REFRESH_D;
    
    Return &genAuthCode;
    
