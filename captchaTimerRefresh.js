@@ -15,14 +15,15 @@ function captchaTimer()
 function addLoadEvent(func) 
 {
   var oldonload = window.onload;
-  
+
+//if (typeof window.onload != 'function')  
   if (typeof oldonload != 'function') 
   {
     window.onload = func;
   } 
   else 
   {
-//    window.onload = function()
+//   window.onload = function()
 //   {
 //    if (oldonload) 
 //    {
