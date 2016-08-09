@@ -3,6 +3,19 @@
 
 Component Record &captchaRec;
 Component string &captchaCode;
+Component string &captchaVerified;
+Component number &refreshCount;
+
+Function clearCaptcha()
+   
+   &captchaRec.HTMLAREA1.Value = "";
+   &captchaRec.HTMLAREA2.Value = GetHTMLText(HTML.UA_CAPTCHA_CLEAR_SCRIPT);
+   &captchaRec.AUTH_KEYWORD.Visible = False;
+   
+   &captchaCode = "";
+   &captchaVerified = "";
+   
+End-Function;
 
 Function buildCaptcha() Returns string
    
@@ -10,6 +23,15 @@ Function buildCaptcha() Returns string
       Local string &captchaRecName;
       SQLExec("SELECT RECNAME FROM PSPNLFIELD WHERE PNLNAME=:1 AND SUBPNLNAME='UA_GET_CAPTCHA_SBP'", %Page, &captchaRecName);
       &captchaRec = GetRecord(@("RECORD." | &captchaRecName));
+   End-If;
+   
+   &refreshCount = &refreshCount + 1;
+   
+   clearCaptcha();
+   
+   If &refreshCount > 4 Then
+      &refreshCount = 0;
+      Return "";
    End-If;
    
    Local string &genAuthCode = String(Int(Rand() * 1000000));;
@@ -35,6 +57,7 @@ Function buildCaptcha() Returns string
    &captchaRec.AUTH_KEYWORD.SetCursorPos(%Page);
    
    &captchaRec.REFRESH_ICN.LabelImage = Image.UA_CAPTCHA_REFRESH_D;
+   &captchaRec.HTMLAREA2.Value = &captchaRec.HTMLAREA2.Value | Char(10) | GetHTMLText(HTML.UA_CAPTCHA_REFRESH_SCRIPT);
    
    Return &genAuthCode;
    
